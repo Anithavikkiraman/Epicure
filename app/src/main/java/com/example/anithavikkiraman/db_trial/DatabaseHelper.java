@@ -29,7 +29,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, 3);
+        super(context, DATABASE_NAME, null, 5);
     }
 
     @Override
@@ -50,15 +50,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean insertData() {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_2, "abc");
-        contentValues.put(COL_3, "xyz");
-        contentValues.put(COL_4, "30");
+        contentValues.put(COL_2, "Idly");
+        contentValues.put(COL_3, "2Nos");
+        contentValues.put(COL_4, "15");
 
         long result = db.insert(TABLE_NAME, null, contentValues);
         if (result == -1)
             return false;
         else
             return true;
+
+    }
+    public void deletedata()
+    {        SQLiteDatabase db = this.getWritableDatabase();
+
+
+        db.execSQL("delete from "+ TABLE_NAME);
+        System.out.println("deleted");
 
     }
 
@@ -82,8 +90,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL2, fname);
         contentValues.put(COL3, quants);
-        contentValues.put(COL3, price);
-        contentValues.put(COL3, amt);
+        contentValues.put(COL4, price);
+        contentValues.put(COL5, amt);
 
         long result = db.insert(NEW_TABLE_NAME, null, contentValues);
         if (result == -1)
@@ -94,7 +102,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getAllData() {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery("select * from "+TABLE_NAME,null);
+        Cursor res = db.rawQuery("select * from "+NEW_TABLE_NAME,null);
         return res;
     }
 
@@ -123,7 +131,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
        SQLiteDatabase db = this.getWritableDatabase();
         //Cursor res = db.rawQuery("select * from "+NEW_TABLE_NAME,null);
-      Cursor res = db.rawQuery("SELECT * FROM " + NEW_TABLE_NAME + " WHERE " + COL2 + "=\'"+key+"\'",null);
+      Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COL2 + "=\'"+key+"\'",null);
       // Cursor res = db.query(NEW_TABLE_NAME,columns , "ENAME=\'"+key+"\'", null, null, null, null);
        //Cursor res = db.query(NEW_TABLE_NAME,columns , COL2+ "=\'"+key+"\'", null, null, null, null);
 
